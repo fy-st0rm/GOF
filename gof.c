@@ -56,7 +56,12 @@ void load_board(Board* board, const char* filename) {
 		char buffer[BOARD_WIDTH + 1];
 		fread(buffer, BOARD_WIDTH, 1, f);
 		buffer[BOARD_WIDTH] = '\0';
+
+#ifdef _WIN32
+		fseek(f, 2, SEEK_CUR);
+#else
 		fseek(f, 1, SEEK_CUR);
+#endif
 
 		strcpy(board->front_buff[i], buffer);
 		strcpy(board->back_buff[i], buffer);
@@ -73,12 +78,12 @@ void print_board(Board* board) {
 	// Copying the back buffer to the front buffer
 	memcpy(board->front_buff, board->back_buff, BOARD_WIDTH * BOARD_HEIGHT);
 
-	printf("         ┏━━━┓╋╋╋╋╋╋╋╋╋╋╋╋╋╋┏━┓╋┏┓╋╋┏━┓\n");
-	printf("         ┃┏━┓┃╋╋╋╋╋╋╋╋╋╋╋╋╋╋┃┏┛╋┃┃╋╋┃┏┛\n");
-	printf("         ┃┃╋┗╋━━┳┓┏┳━━┓╋┏━━┳┛┗┓╋┃┃┏┳┛┗┳━━┓\n");
-	printf("         ┃┃┏━┫┏┓┃┗┛┃┃━┫╋┃┏┓┣┓┏┛╋┃┃┣╋┓┏┫┃━┫\n");
-	printf("         ┃┗┻━┃┏┓┃┃┃┃┃━┫╋┃┗┛┃┃┃╋╋┃┗┫┃┃┃┃┃━┫\n");
-	printf("         ┗━━━┻┛┗┻┻┻┻━━┛╋┗━━┛┗┛╋╋┗━┻┛┗┛┗━━┛\n\n");
+//	printf("         ┏━━━┓╋╋╋╋╋╋╋╋╋╋╋╋╋╋┏━┓╋┏┓╋╋┏━┓\n");
+//	printf("         ┃┏━┓┃╋╋╋╋╋╋╋╋╋╋╋╋╋╋┃┏┛╋┃┃╋╋┃┏┛\n");
+//	printf("         ┃┃╋┗╋━━┳┓┏┳━━┓╋┏━━┳┛┗┓╋┃┃┏┳┛┗┳━━┓\n");
+//	printf("         ┃┃┏━┫┏┓┃┗┛┃┃━┫╋┃┏┓┣┓┏┛╋┃┃┣╋┓┏┫┃━┫\n");
+//	printf("         ┃┗┻━┃┏┓┃┃┃┃┃━┫╋┃┗┛┃┃┃╋╋┃┗┫┃┃┃┃┃━┫\n");
+//	printf("         ┗━━━┻┛┗┻┻┻┻━━┛╋┗━━┛┗┛╋╋┗━┻┛┗┛┗━━┛\n\n");
 
 	printf("+");
 	for (int i = 0; i < BOARD_WIDTH; i++) {
